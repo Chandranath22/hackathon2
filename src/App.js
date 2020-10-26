@@ -1,24 +1,49 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route
+} from "react-router-dom";
+import './scss/main.scss';
+
+// Pages
+import BodyLayout from './layout/layout';
+import Login from './pages/Login/login';
+import Register from './pages/Register/register';
+import CandidateHome from './pages/Candidate/candidHome';
+import AdminHome from './pages/Admin/adminHome';
+import MySQL from './pages/MySQL/mysql';
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Router>
+        <BodyLayout>
+          <Switch>
+            <Route exact={true} path="/">
+              <Login />
+            </Route>
+            <Route exact={true} path="/register">
+              <Register />
+            </Route>
+            <Route exact={true} path="/candidate_login">
+              <Login />
+            </Route>
+            <Route exact={true} path="/admin_login">
+              <Login />
+            </Route>
+            <Route exact={true} path="/home">
+              <CandidateHome />
+            </Route>
+            <Route exact={true} path='/admin_home'>
+              <AdminHome />
+            </Route>
+            <Route exact={true} path="/questions/mysql">
+              <MySQL />
+            </Route>
+          </Switch>
+        </BodyLayout>
+      </Router>
     </div>
   );
 }
