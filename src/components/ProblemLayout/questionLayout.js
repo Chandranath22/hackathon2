@@ -24,7 +24,10 @@ const QuestionLayout = ({ questions, test }) => {
     const length = questions.length;
     const { Title, Paragraph } = Typography;
     const { TextArea } = Input;
-
+    const isAdmin = sessionStorage.getItem('isAdmin') || false;
+    const userData = sessionStorage.getItem('user');
+    const user = JSON.parse(userData);
+    console.log(user);
     const onPressFinish = () => {
         const data = {
             email,
@@ -37,18 +40,6 @@ const QuestionLayout = ({ questions, test }) => {
     const onPressNext = () => {
         setNumber(number + 1);
         setAnswer('');
-        // if(number !== length - 1){
-        //     setNumber(number + 1);
-        //     setAnswer('');
-        // }
-        // else if (number === length - 1) {
-        //     const data = {
-        //         email,
-        //         test,
-        //         answersArray
-        //     }
-        //     answerSubmit(data);
-        // }
     };
 
     const onPressPrev = () => {
@@ -102,19 +93,19 @@ const QuestionLayout = ({ questions, test }) => {
                         />}
                     </Layout>
                     <Layout className='button-layout'>
-                        <Button type="primary" className='button' onClick={onPressPrev} disabled={number === 0}>
+                        {!isAdmin && <Button type="primary" className='button' onClick={onPressPrev} disabled={number === 0}>
                             Prev
-                        </Button>
+                        </Button>}
                         <Button type="primary" className='button' onClick={onPressNext} disabled={!(number !== length - 1)}>
                             Next
                         </Button>
-                        <Button type="primary" className='button' onClick={onPressFinish} disabled={(number < length - 1)}>
+                        {!isAdmin && <Button type="primary" className='button' onClick={onPressFinish} disabled={(number < length - 1)}>
                             Finish
-                        </Button>
+                        </Button>}
                     </Layout>
                 </Col>
                 <Divider type="vertical" style={{height: '100%'}}/>
-                <Col className='input-answer' span={12}>
+                {!isAdmin && <Col className='input-answer' span={12}>
                     <Layout className='input-area'>
                         <TextArea
                             autoSize={{ minRows: 25, maxRows: 6 }}
@@ -126,7 +117,17 @@ const QuestionLayout = ({ questions, test }) => {
                         <Button type="primary" onClick={onPressSubmit}>Submit</Button>
                         <Button type="primary" className='button' onClick={() => setAnswer('')}>Reset</Button>
                     </Layout>
-                </Col>
+                </Col>}
+                {isAdmin && <Col className='input-answer' span={12}>
+                    <Layout className='input-area'>
+                    <Paragraph strong>Candidate name: {user.name}</Paragraph>
+                        <TextArea
+                            value={test === 'MYSQL' ? user.sql_answers[number].answer : test === 'AWS' ? user.aws_answers[number].answer : user.python_answers[number].answer}
+                            autoSize={{ minRows: 25, maxRows: 6 }}
+                            disabled
+                        />
+                    </Layout>
+                </Col>}
             </Row>
         </Layout>
     );

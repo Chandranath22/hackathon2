@@ -17,13 +17,13 @@ const AdminHome = () => {
         }
         getUserData();
     }, []);
-   
+
     return (     
         <div className="admin-home">  
             {
                 userData.length > 0 ? userData.map((user, index) => {
                     return (                    
-                        <Card name={user.name}/>    
+                        <Card user={user}/> 
                     )
                 }) : ''
             }
