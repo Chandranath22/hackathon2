@@ -13,6 +13,8 @@ import Register from './pages/Register/register';
 import CandidateHome from './pages/Candidate/candidHome';
 import AdminHome from './pages/Admin/adminHome';
 import MySQL from './pages/MySQL/mysql';
+import AWS from './pages/AWS/aws';
+import Python from './pages/PYTHON/python';
 
 function App() {
   return (
@@ -40,6 +42,12 @@ function App() {
             </Route>
             <Route exact={true} path="/questions/mysql">
               <MySQL />
+            </Route>
+            <Route exact={true} path="/questions/aws">
+              <AWS />
+            </Route>
+            <Route exact={true} path="/questions/python">
+              <Python />
             </Route>
           </Switch>
         </BodyLayout>

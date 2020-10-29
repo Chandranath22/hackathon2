@@ -7,14 +7,15 @@ import {
     Button,
     Divider,
     Input,
-    Image
+    Image,
+    notification
 } from 'antd';
 import 'antd/dist/antd.css';
 import './questionLayout.scss';
 
 import useAnswerSubmit from '../../hooks/useAnswerSubmit';
 
-const QuestionLayout = ({ questions }) => {
+const QuestionLayout = ({ questions, test }) => {
     const [answer, setAnswer] = useState('');
     const [number, setNumber] = useState(0);
     const [answersArray, setAnswersArray] = useState([]);
@@ -24,19 +25,30 @@ const QuestionLayout = ({ questions }) => {
     const { Title, Paragraph } = Typography;
     const { TextArea } = Input;
 
-    const onPressNext = () => {
-        if(number !== length - 1){
-            setNumber(number + 1);
-            setAnswer('');
-        } else if(number === length - 1) {
-            console.log('finished');
-            const data = {
-                email,
-                test: 'MYSQL',
-                answersArray
-            }
-            answerSubmit(data);
+    const onPressFinish = () => {
+        const data = {
+            email,
+            test,
+            answersArray
         }
+        answerSubmit(data);
+    }
+
+    const onPressNext = () => {
+        setNumber(number + 1);
+        setAnswer('');
+        // if(number !== length - 1){
+        //     setNumber(number + 1);
+        //     setAnswer('');
+        // }
+        // else if (number === length - 1) {
+        //     const data = {
+        //         email,
+        //         test,
+        //         answersArray
+        //     }
+        //     answerSubmit(data);
+        // }
     };
 
     const onPressPrev = () => {
@@ -44,10 +56,6 @@ const QuestionLayout = ({ questions }) => {
             setNumber(number - 1);
         }
     };
-
-    const onPressHome = () => {
-        window.location.href = '/home';
-    }
 
     const onPressSubmit = () => {
         const tempArray = answersArray;
@@ -58,6 +66,20 @@ const QuestionLayout = ({ questions }) => {
             tempArray.push(input);
             setAnswersArray(tempArray);
         }
+		notification['success']({
+			key: 'notification',
+			message: 'Submit Successful',
+			description: 'Your answer was submitted successfully',
+			duration: 2,
+			placement: 'topRight',
+			style: {
+				width: 380,
+				height: 100,
+				backgroundColor: '#F6FFED',
+				border: 'solid 1px #B7EB8F',
+				color: 'black'
+			}
+		});
     }
 
     return (
@@ -73,21 +95,21 @@ const QuestionLayout = ({ questions }) => {
                         </Paragraph>
                     </Typography>
                     <Layout className='image'>
-                        <Image
+                        {test === 'MYSQL' && <Image
                             src={require('../../assets/images/northwind-er-relationship.png')}
                             alt="er-diagram"
                             className="er-image"
-                        />
+                        />}
                     </Layout>
                     <Layout className='button-layout'>
-                        <Button type="primary" className='button' onClick={onPressHome}>
-                            Home
-                        </Button>
-                        <Button type="primary" className='button' onClick={onPressPrev}>
+                        <Button type="primary" className='button' onClick={onPressPrev} disabled={number === 0}>
                             Prev
                         </Button>
-                        <Button type="primary" className='button' onClick={onPressNext}>
-                            {number !== length - 1 ? 'Next' : 'Finish'}
+                        <Button type="primary" className='button' onClick={onPressNext} disabled={!(number !== length - 1)}>
+                            Next
+                        </Button>
+                        <Button type="primary" className='button' onClick={onPressFinish} disabled={(number < length - 1)}>
+                            Finish
                         </Button>
                     </Layout>
                 </Col>
