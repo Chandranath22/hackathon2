@@ -26,7 +26,7 @@ const MySQL = () => {
         }
     ];
     return (
-        <QuestionLayout questions={questionsArray}/>
+        <QuestionLayout questions={questionsArray} test={'MYSQL'}/>
     );
 }
 
