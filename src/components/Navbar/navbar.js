@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { UserOutlined, LogoutOutlined, HomeOutlined } from '@ant-design/icons';
 import './navbar.scss';
 
 
@@ -21,17 +22,22 @@ const Navbar = () => {
             <div className="navbar">
                 <div className="logo">
                     <Link to={admin ? '/admin_home' : '/home'}>
-                        <h1 className="logo-text">Training Portal</h1>
+                        <h1 className="logo-text">
+                            <HomeOutlined style={{marginRight: '8px'}}/>
+                            Training Portal
+                        </h1>
                     </Link>
                 </div>
                 <div className="button-layout">
                     <Link to={admin ? '/admin_home' : '/home'}>
                         <h5 className="button-text">
+                            <UserOutlined style={{marginRight: '8px'}}/>
                             {email}
                         </h5>
                     </Link>
                     <Link to={admin ? '/admin_login' : '/candidate_login'}>
-                        <h5 className="button-text" style={{marginRight: "80px"}} onClick={onPressLogout}>
+                        <h5 className="button-text" style={{ marginRight: "80px" }} onClick={onPressLogout}>
+                            <LogoutOutlined style={{marginRight: '8px'}}/>
                             Logout
                         </h5>
                     </Link>

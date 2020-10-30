@@ -8,10 +8,10 @@ const CandidateHome = () => {
         <Layout className='candid-home'>
             <Row className='options-layout'>
                 <Col className='options aws' span={8}>
-                    <Button className='button'>AWS</Button>
+                    <Button className='button' onClick={() => window.location.href = '/questions/aws'}>AWS</Button>
                 </Col>
                 <Col className='options python' span={8}>
-                    <Button className='button'>Python</Button> 
+                    <Button className='button' onClick={() => window.location.href = '/questions/python'}>Python</Button> 
                 </Col>
                 <Col className='options sql' span={8}>
                     <Button className='button' onClick={() => window.location.href = '/questions/mysql'}>MySQL</Button>

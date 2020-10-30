@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Form, Input, Button, Layout } from 'antd';
+import { Form, Input, Button, Layout, notification } from 'antd';
 import { useLocation } from 'react-router-dom';
 import useCandidateLogin from '../../hooks/useCandidateLogin';
 import useAdminLogin from '../../hooks/useAdminLogin';
@@ -22,8 +22,21 @@ const Login = () => {
 
     useEffect(() => {
         setLoading(false);
-        if(message !== 'successful' && message !== '') {
-            setLoading(true);
+        if (message !== 'successful' && message !== '') {
+            notification['error']({
+                key: 'error',
+                message: 'Login Failed',
+                description: `Login Attempt Failed. ${message}`,
+                duration: 3,
+                placement: 'topRight',
+                style: {
+                    width: 380,
+                    height: 100,
+                    backgroundColor: '#FFF2F0',
+                    border: 'solid 1px #FFCCC7',
+                    color: 'black'
+                },
+            });
             if(location.pathname === '/admin_login') {
                 console.log(errMessage);
             } else {
@@ -43,12 +56,26 @@ const Login = () => {
     };
 
     const onFinishFailed = (errorInfo) => {
+        notification['warning']({
+            key: 'warning',
+            message: 'Some error occurred',
+            description: 'We are sorry, but you cant go ahead due to some error!',
+            duration: 3,
+            placement: 'topRight',
+            style: {
+                width: 380,
+                height: 100,
+                backgroundColor: '#FFFBE6',
+                border: 'solid 1px #FFE58F',
+                color: 'black'
+            },
+        });
         console.log('Failed:', errorInfo);
     };
 
     return (
         <Layout className='login'>
-             <Layout className="header-section">
+            <Layout className="header-section">
                 <h3 className="header-text">
                     {location.pathname === '/admin_login' ? 'Admin Login' : 'Candidate Login'}
                 </h3>
