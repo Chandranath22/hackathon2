@@ -1,5 +1,6 @@
 import React from 'react';
 import { Form, Input, Button, Layout } from 'antd';
+import axios from 'axios';
 import 'antd/dist/antd.css';
 import './register.scss';
 const layout = {
@@ -12,8 +13,16 @@ const layout = {
 };
 
 const Register = () => {
-    const onFinish = (values) => {
+    const onFinish = async (values) => {
+
         console.log('Success:', values);
+        const response = await axios.post('http://localhost:9000/api/register',values);
+        if(response.data.message === 'success'){
+            console.log('Successful');
+        } else {
+            console.log('error');
+        }
+    //     res.send(values);
     };
 
     const onFinishFailed = (errorInfo) => {
