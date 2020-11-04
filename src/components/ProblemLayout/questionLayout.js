@@ -120,7 +120,7 @@ const QuestionLayout = ({ questions, test }) => {
                 </Col>}
                 {isAdmin && <Col className='input-answer' span={12}>
                     <Layout className='input-area'>
-                    <Paragraph strong>Candidate name: {user.name}</Paragraph>
+                    <Paragraph strong>Candidate name: {user.name} </Paragraph>
                         <TextArea
                             value={test === 'MYSQL' ? user.sql_answers[number].answer : test === 'AWS' ? user.aws_answers[number].answer : user.python_answers[number].answer}
                             autoSize={{ minRows: 25, maxRows: 6 }}
