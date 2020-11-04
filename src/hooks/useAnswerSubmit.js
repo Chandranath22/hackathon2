@@ -12,21 +12,22 @@ export default () => {
             const response = await axios.post('http://localhost:9000/api/submitAnswer', data);
             console.log(response);
             if (response.data.message === 'successful') {
-                notification['success']({
-                    key: 'notification',
-                    message: 'Test Finished',
-                    description: 'Your test has been finished and the answers are successfully submitted',
-                    duration: 5,
-                    placement: 'topRight',
-                    style: {
-                        width: 380,
-                        height: 100,
-                        backgroundColor: '#F6FFED',
-                        border: 'solid 1px #B7EB8F',
-                        color: 'black'
-                    },
-                    onClose: onSuccessfulSubmit()
-                });
+                // notification['success']({
+                //     key: 'notification',
+                //     message: 'Test Finished',
+                //     description: 'Your test has been finished and the answers are successfully submitted',
+                //     duration: 5,
+                //     placement: 'topRight',
+                //     style: {
+                //         width: 380,
+                //         height: 100,
+                //         backgroundColor: '#F6FFED',
+                //         border: 'solid 1px #B7EB8F',
+                //         color: 'black'
+                //     },
+                //     // onClose: onSuccessfulSubmit()
+                // });
+                console.log(response.data.messag)
             } else {
                 notification['error']({
                     key: 'error',

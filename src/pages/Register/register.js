@@ -1,6 +1,7 @@
-import React from 'react';
-import { Form, Input, Button, Layout } from 'antd';
-import axios from 'axios';
+import React, { useState, useEffect } from 'react';
+import { Form, Input, Button, Layout, notification } from 'antd';
+import { useLocation } from 'react-router-dom';
+import useRegister from '../../hooks/useRegister';
 import 'antd/dist/antd.css';
 import './register.scss';
 const layout = {
@@ -13,21 +14,56 @@ const layout = {
 };
 
 const Register = () => {
-    const onFinish = async (values) => {
+    const [register, message] = useRegister();
+    const [loading, setLoading] = useState(false);
+    const location = useLocation();
 
-        console.log('Success:', values);
-        const response = await axios.post('http://localhost:9000/api/register',values);
-        if(response.data.message === 'success'){
-            console.log('Successful');
-        } else {
-            console.log('error');
+    useEffect(() => {
+        setLoading(false);
+        if (message !== 'success' && message !== '') {
+            notification['error']({
+                key: 'error',
+                message: 'Register Failed',
+                description: `Register Attempt Failed. ${message}`,
+                duration: 5,
+                placement: 'topRight',
+                style: {
+                    width: 380,
+                    height: 100,
+                    backgroundColor: '#FFF2F0',
+                    border: 'solid 1px #FFCCC7',
+                    color: 'black'
+                },
+            });
         }
-    //     res.send(values);
+    }, [message, location.pathname]);
+
+
+    const onFinish = async (values) => {
+        setLoading(true)
+        console.log('Success:', values);
+        register(values);
     };
+
 
     const onFinishFailed = (errorInfo) => {
+        notification['warning']({
+            key: 'warning',
+            message: 'Some error occurred',
+            description: 'Something went wrong!',
+            duration: 3,
+            placement: 'topRight',
+            style: {
+                width: 380,
+                height: 100,
+                backgroundColor: '#FFFBE6',
+                border: 'solid 1px #FFE58F',
+                color: 'black'
+            },
+        });
         console.log('Failed:', errorInfo);
     };
+
 
     return (
         <Layout className='form-layout'>
@@ -84,7 +120,7 @@ const Register = () => {
                         <Input.Password />
                     </Form.Item>
                     <Form.Item className='register-btn'>
-                        <Button type="primary" htmlType="submit" className='button'>
+                        <Button type="primary" htmlType="submit" className='button' loading={loading}>
                             Register
                         </Button>
                     </Form.Item>

@@ -88,9 +88,6 @@ const Cards = ({ user }) => {
                     View answers
                 </Button>
             </Card>
-            {/* {isAwsClicked && <AWS />}
-            {isSqlClicked && <MySQL />}
-            {isPythonClicked && <PYTHON />} */}
         </Layout>
     );
 };

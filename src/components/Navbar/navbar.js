@@ -58,9 +58,9 @@ const Navbar = () => {
                             {location.pathname === '/admin_login' ? 'Candidate Login' : 'Admin Login'}
                         </h5>
                     </Link>
-                    <Link to='/register'>
+                    <Link to={location.pathname === '/register' ? 'candidate_login' : '/register'}>
                         <h5 className="button-text" style={{marginRight: "80px"}}>
-                            Register
+                            {location.pathname === '/register' ? 'Candidate Login' : 'Register'}
                         </h5>
                     </Link>
                 </div>
